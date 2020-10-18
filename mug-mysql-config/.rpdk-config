@@ -1,0 +1,12 @@
+{
+    "typeName": "MuG::MySQL::Config",
+    "language": "go",
+    "runtime": "go1.x",
+    "entrypoint": "handler",
+    "testEntrypoint": "handler",
+    "settings": {
+        "importpath": "github.com/ggiallo28/mug-mysql-star/mug-mysql-config",
+        "protocolVersion": "2.0.0",
+        "pluginVersion": "2.0.0"
+    }
+}
