@@ -5,8 +5,8 @@
     "entrypoint": "handler",
     "testEntrypoint": "handler",
     "settings": {
-        "importpath": "github.com/ggiallo28/mug-mysql-star/mug-mysql-config",
+        "import_path": "github.com/ggiallo28/mug-mysql-star/mug-mysql-config",
         "protocolVersion": "2.0.0",
-        "pluginVersion": "2.0.0"
+        "pluginVersion": "2.0.2"
     }
 }

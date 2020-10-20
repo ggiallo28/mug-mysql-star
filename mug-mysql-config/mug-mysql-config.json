@@ -1,105 +1,251 @@
 {
-    "typeName": "MuG::MySQL::Config",
-    "description": "An example resource schema demonstrating some basic constructs and validation rules.",
-    "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
-    "definitions": {
-        "InitechDateFormat": {
-            "$comment": "Use the `definitions` block to provide shared resource property schemas",
-            "type": "string",
-            "format": "date-time"
+	"typeName": "MuG::MySQL::Config",
+	"description": "An example resource schema demonstrating some basic constructs and validation rules.",
+	"sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+	"definitions": {
+		"ProviderConfiguration": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"Endpoint": {
+					"description": "TODO",
+					"type": "string",
+					"pattern": "[/@]+([^:/@]+)([:/]+|$)"
+				},
+				"Username": {
+					"description": "TODO",
+					"type": "string"
+				},
+				"Password": {
+					"description": "TODO",
+					"type": "string"
+				},
+				"Proxy": {
+					"description": "TODO",
+					"type": "string"
+				},
+				"TLS": {
+					"type": "string",
+					"enum": [
+						"true",
+						"false",
+						"skip-verify"
+					]
+				},
+				"MaxConnLifetimeSec": {
+					"type": "integer"
+				},
+				"MaxOpenConns": {
+					"type": "integer"
+				},
+				"AuthenticationPlugin": {
+					"type": "string",
+					"enum": [
+						"native",
+						"cleartext"
+					]
+				}
+			},
+			"required": ["Endpoint", "Username"]
+		},
+		"Tag": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"Key": {
+					"type": "string"
+				},
+				"Value": {
+					"type": "string"
+				}
+			},
+			"required": ["Value", "Key"]
+		},
+		"GenerateSecretString": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"ExcludeUppercase": {
+					"type": "boolean"
+				},
+				"RequireEachIncludedType": {
+					"type": "boolean"
+				},
+				"IncludeSpace": {
+					"type": "boolean"
+				},
+				"ExcludeCharacters": {
+					"type": "string"
+				},
+				"GenerateStringKey": {
+					"type": "string"
+				},
+				"PasswordLength": {
+					"type": "integer"
+				},
+				"ExcludePunctuation": {
+					"type": "boolean"
+				},
+				"ExcludeLowercase": {
+					"type": "boolean"
+				},
+				"SecretStringTemplate": {
+					"type": "string"
+				},
+				"ExcludeNumbers": {
+					"type": "boolean"
+				}
+			}
+		},
+		"VpcConfig": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"SecurityGroupIds": {
+					"type": "array",
+					"uniqueItems": true,
+					"items": {
+						"type": "string"
+					}
+				},
+				"SubnetIds": {
+					"type": "array",
+					"uniqueItems": true,
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"required": [
+				"SecurityGroupIds",
+				"SubnetIds"
+			]
+		},
+		"Parameter": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"Policies": {
+					"type": "string"
+				},
+				"Tier": {
+					"type": "string"
+				}
+			}
+		},
+		"SecureParameter": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"KmsKeyId": {
+					"type": "string"
+				},
+				"GenerateSecretString": {
+					"$ref": "#/definitions/GenerateSecretString"
+				}
+			}
+		}
+	},
+	"properties": {
+		"Name": {
+			"description": "TODO Description and pattern",
+			"type": "string"
+		},
+		"Description": {
+			"type": "string"
+		},
+		"SecureParameter": {
+		    "$ref": "#/definitions/SecureParameter"
+		},
+		"Parameter" :{
+		    "$ref": "#/definitions/Parameter"
         },
-        "Memo": {
-            "type": "object",
-            "properties": {
-                "Heading": {
-                    "type": "string"
-                },
-                "Body": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
-        }
-    },
-    "properties": {
-        "TPSCode": {
-            "description": "A TPS Code is automatically generated on creation and assigned as the unique identifier.",
-            "type": "string",
-            "pattern": "^[A-Z]{3,5}[0-9]{8}-[0-9]{4}$"
-        },
-        "Title": {
-            "description": "The title of the TPS report is a mandatory element.",
-            "type": "string",
-            "minLength": 20,
-            "maxLength": 250
-        },
-        "CoverSheetIncluded": {
-            "description": "Required for all TPS Reports submitted after 2/19/1999",
-            "type": "boolean"
-        },
-        "DueDate": {
-            "$ref": "#/definitions/InitechDateFormat"
-        },
-        "ApprovalDate": {
-            "$ref": "#/definitions/InitechDateFormat"
-        },
-        "Memo": {
-            "$ref": "#/definitions/Memo"
-        },
-        "SecondCopyOfMemo": {
-            "description": "In case you didn't get the first one.",
-            "$ref": "#/definitions/Memo"
-        },
-        "TestCode": {
-            "type": "string",
-            "enum": [
-                "NOT_STARTED",
-                "CANCELLED"
-            ]
-        },
-        "Authors": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        }
-    },
-    "additionalProperties": false,
-    "required": [
-        "TestCode",
-        "Title"
-    ],
-    "readOnlyProperties": [
-        "/properties/TPSCode"
-    ],
-    "primaryIdentifier": [
-        "/properties/TPSCode"
-    ],
-    "handlers": {
-        "create": {
-            "permissions": [
-                "initech:CreateReport"
-            ]
-        },
-        "read": {
-            "permissions": [
-                "initech:DescribeReport"
-            ]
-        },
-        "update": {
-            "permissions": [
-                "initech:UpdateReport"
-            ]
-        },
-        "delete": {
-            "permissions": [
-                "initech:DeleteReport"
-            ]
-        },
-        "list": {
-            "permissions": [
-                "initech:ListReports"
-            ]
-        }
-    }
+		"ProviderConfiguration": {
+			"$ref": "#/definitions/ProviderConfiguration"
+		},
+		"VpcConfig": {
+			"$ref": "#/definitions/VpcConfig"
+		},
+		"Tags": {
+			"type": "array",
+			"uniqueItems": false,
+			"items": {
+				"$ref": "#/definitions/Tag"
+			}
+		},
+		"Id": {
+			"type": "string"
+		},
+		"ARN": {
+			"type": "string"
+		},
+		"Version" : {
+		    "type": "string"
+		}
+	},
+	"additionalProperties": false,
+	"required": [
+		"Name",
+		"ProviderConfiguration"
+	],
+	"readOnlyProperties": [
+		"/properties/Id",
+		"/properties/ARN",
+		"/properties/Version"
+	],
+	"createOnlyProperties": [
+		"/properties/Name"
+	],
+	"primaryIdentifier": [
+		"/properties/Id"
+	],
+	"additionalIdentifiers": [
+		[
+			"/properties/ARN",
+			"/properties/Name",
+			"/properties/Version"
+		]
+	],
+	"handlers": {
+		"create": {
+			"permissions": [
+				"secretsmanager:*",
+				"kms:DescribeKey",
+				"kms:ListAliases",
+				"kms:ListKeys"
+			]
+		},
+		"read": {
+			"permissions": [
+				"secretsmanager:*",
+				"kms:DescribeKey",
+				"kms:ListAliases",
+				"kms:ListKeys"
+			]
+		},
+		"update": {
+			"permissions": [
+				"secretsmanager:*",
+				"kms:DescribeKey",
+				"kms:ListAliases",
+				"kms:ListKeys"
+			]
+		},
+		"delete": {
+			"permissions": [
+				"secretsmanager:*",
+				"kms:DescribeKey",
+				"kms:ListAliases",
+				"kms:ListKeys"
+			]
+		},
+		"list": {
+			"permissions": [
+				"secretsmanager:*",
+				"kms:DescribeKey",
+				"kms:ListAliases",
+				"kms:ListKeys"
+			]
+		}
+	}
 }

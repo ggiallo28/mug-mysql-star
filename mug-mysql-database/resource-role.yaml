@@ -23,10 +23,11 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                - "kms:DescribeKey"
-                - "kms:ListAliases"
-                - "kms:ListKeys"
-                - "secretsmanager:*"
+                - "initech:CreateReport"
+                - "initech:DeleteReport"
+                - "initech:DescribeReport"
+                - "initech:ListReports"
+                - "initech:UpdateReport"
                 Resource: "*"
 Outputs:
   ExecutionRoleArn:

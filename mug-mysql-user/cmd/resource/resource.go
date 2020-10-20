@@ -2,34 +2,12 @@ package resource
 
 import (
 	"errors"
-	//"fmt"
-	"log"
-	"os"
 
 	"github.com/aws-cloudformation/cloudformation-cli-go-plugin/cfn/handler"
-	//"github.com/terraform-providers/terraform-provider-mysql/mysql"
 )
 
 // Create handles the Create event from the Cloudformation service.
 func Create(req handler.Request, prevModel *Model, currentModel *Model) (handler.ProgressEvent, error) {
-	f, err := os.OpenFile("mug.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatalf("error opening file: %v", err)
-	}
-	defer f.Close()
-
-	log.SetOutput(f)
-
-	log.Printf("EVENT: %s", `
-   ____ ____  _____    _  _____ _____ 
-  / ___|  _ \| ____|  / \|_   _| ____|
- | |   | |_) |  _|   / _ \ | | |  _|  
- | |___|  _ <| |___ / ___ \| | | |___ 
-  \____|_| \_\_____/_/   \_\_| |_____|
-  `)
-
-	//var a = mysql.Provider
-
 	// Add your code here:
 	// * Make API calls (use req.Session)
 	// * Mutate the model
@@ -46,7 +24,7 @@ func Create(req handler.Request, prevModel *Model, currentModel *Model) (handler
 
 	// Not implemented, return an empty handler.ProgressEvent
 	// and an error
-	//return handler.ProgressEvent{}, errors.New("Not implemented: Create")
+	return handler.ProgressEvent{}, errors.New("Not implemented: Create")
 }
 
 // Read handles the Read event from the Cloudformation service.

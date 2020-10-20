@@ -1,11 +1,21 @@
 {
-    "TPSCode": "...",
-    "Title": "...",
-    "CoverSheetIncluded": "...",
-    "DueDate": "...",
-    "ApprovalDate": "...",
-    "Memo": "...",
-    "SecondCopyOfMemo": "...",
-    "TestCode": "...",
-    "Authors": "..."
+  "callbackContext": null,
+  "action": "CREATE",
+  "requestData": {
+    "resourceProperties": {
+      "AuthenticationPlugin": "",
+      "ConfigName": "test-mysql-config",
+      "Endpoint": "jdbc:mysql://localhost:3306/sonoo",
+      "MaxConnLifetimeSec": 10,
+      "MaxOpenConns": 1,
+      "Password": "password",
+      "Proxy": "localhost",
+      "TLS": "true",
+      "Username": "root"
+    },
+    "previousResourceProperties": null
+  },
+  "region": "us-east-1",
+  "awsAccountId": "438591499564",
+  "bearerToken": "46130c5f-47b9-4520-b5d0-0f1d45d66634"
 }

@@ -1,0 +1,13 @@
+{
+    "CREATE": {
+      "/AuthenticationPlugin": "",
+      "/ConfigName": "test-mysql-config",
+      "/Endpoint": "jdbc:mysql://localhost:3306/sonoo",
+      "/MaxConnLifetimeSec": 10,
+      "/MaxOpenConns": 1,
+      "/Password": "password",
+      "/Proxy": "localhost",
+      "/TLS": "true",
+      "/Username": "root"
+    }
+}

@@ -8,7 +8,7 @@ import (
 
 	"github.com/aws-cloudformation/cloudformation-cli-go-plugin/cfn"
 	"github.com/aws-cloudformation/cloudformation-cli-go-plugin/cfn/handler"
-	"github.com/ggiallo28/mug-mysql-star/mug-mysql-config/cmd/resource"
+	"github.com/ggiallo28/mug-mysql-star/mug-mysql-database/cmd/resource"
 )
 
 // Handler is a container for the CRUDL actions exported by resources
